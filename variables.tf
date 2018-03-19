@@ -73,6 +73,17 @@ variable "bastion_host_ssh_public_keys" {
 }
 
 #
+# Docker-compose host
+#
+variable "docker_compose_http_port" {
+  description = "The port to forward HTTP traffic to from the load balancer"
+}
+
+variable "docker_compose_decrypted_https_port" {
+  description = "The port to forward decrypted HTTPS traffic to from the load balancer. May be the same as docker_compose_http_port"
+}
+
+#
 # Shared configuration
 #
 variable "route53_zone_id" {
