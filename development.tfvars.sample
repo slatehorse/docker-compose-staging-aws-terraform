@@ -1,0 +1,31 @@
+#
+# Terraform backend setup (during terraform init): 
+# 
+# - `bucket`: `my_bucket`
+# - `key`: `staging.tfstate`
+#
+# Then (assuming the Route53 zone is example.com) SSH into:
+# ubuntu@my_project_name-bh.example.com
+
+# This is used for naming resources, and must be in snake-case
+project_name = "my_project_name"
+
+# These tags are applied to all resources created by Terraform, to ease billing and management
+common_tags = {
+  Project = "Sample Docker Compose Terraform Project",
+  Terraform = "true",
+  Environment = "staging"
+}
+
+# Add SSH public keys here for anyone you want to be able to SSH into the host
+bastion_host_ssh_public_keys = {
+  ryan_imac = "ssh-rsa AAAAB3N...",
+  ryan_mbp = "ssh-rsa AAAAB3Q..."
+}
+
+# The Route53 Zone ID to create an appropriate FWDN for the service. Find yours at 
+# https://console.aws.amazon.com/route53/home#hosted-zones:
+route53_zone_id = "Z1OAT9AM..."
+
+docker_compose_http_port = 5000
+docker_compose_decrypted_https_port = 18080
