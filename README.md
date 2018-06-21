@@ -6,7 +6,6 @@ TODO: describe this project
 
 # TODO costs
 
-- NAT gateway
 - EC2 bastion host
 - EC2 docker-compose host
 
@@ -19,33 +18,31 @@ TODO: describe this project
 ## Getting set up
 Ensure you have your AWS credential set as environment variables:
 
+> Tip: add your credentials to `.env` and prime your shell using `source .env`.
+
 ```
 export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 ```
 
-## Making development easier
+Next, [create an S3 bucket](https://s3.console.aws.amazon.com/s3/home) to store our Terraform state centrally.
 
-We want to be able to run Terraform without needing to enter variables for every run.
+Next, rename `development.tfvars.sample` to `development.tfvars` and update to match your requirements.
 
-To do this, create a file named `development.tfvars`, and add variables you set each time, e.g.:
-
-```terraform
-project_name = "my-special-project"
-
-common_tags = {
-  Client = "My Client Ltd",
-  Project = "Example staging",
-  Terraform = "true",
-  Environment = "staging"
-}
-```
-
-Then you can use these variables by specifying the file when you run Terraform, e.g.:
+Now you're ready to initialise Terraform:
 
 ```bash
-terraform plan -var-file=development.tfvars
+terraform init
 ```
 
-> You can choose any name for this file.
+The `key` setting just provides a prefix to the statefile – this can be set to `staging.tfstate` for now.
 
+Now you're all set up and ready to deploy.
+
+## Deploying the infrastructure
+
+The service can be deployed/updated with:
+
+```
+terraform apply -var-file=development.tfvars
+```
